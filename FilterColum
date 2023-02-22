@@ -3,7 +3,7 @@ JS
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 window.addEventListener('resize', function () {
 
-    if ($.fn.DataTable.isDataTable('#dataTable')) {//Valida si se ha iniciado antes la linbrería dataTable
+    if ($.fn.DataTable.isDataTable('#dataTable')) {//Verifica la linbrería dataTable se ha inciiado
 
         $("#dataTable").dataTable().fnDestroy();
 
