@@ -1,0 +1,155 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+JS
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+window.addEventListener('resize', function () {
+
+    if ($.fn.DataTable.isDataTable('#dataTable')) {//Valida si se ha iniciado antes la linbrería dataTable
+
+        $("#dataTable").dataTable().fnDestroy();
+
+    }
+
+    cargaDeFilterColumn();
+
+})
+
+$(document).ready(function () {
+
+ $('#dataTable thead tr')
+        .clone(false)
+        .addClass('filters')
+        .appendTo('#dataTable thead');
+
+        var table = $('#dataTable').DataTable({
+
+            orderCellsTop: true,
+
+            dom: 'Blfrtip',
+
+            responsive: true,
+
+            fixedHeader: true,
+
+        });
+
+    var cont = 0;
+
+    $('#dataTable thead tr:eq(1) th').each(function () {
+        cont++
+
+
+        $(this).html('<input type="text" style="width:100%; border-radius: 5px;" class="column_search" id = "' + cont + '"/>');
+        var prueba = document.getElementById(cont.toString());
+
+        if (prueba.style.width === "0px") {
+
+            $(this).html('<input type="text" style="width:100%; display: none;" class="column_search" id = "' + cont + '"/>');
+
+        } else {
+            $(this).html('<input type="text" style="width:100%; border-radius: 5px;" class="column_search" id = "' + cont + '"/>');
+        }
+        });
+
+});
+
+function cargaDeFilterColumn() {
+
+
+    var table = $('#dataTable').DataTable({
+
+        orderCellsTop: true,
+
+        dom: 'Blfrtip',
+
+        responsive: true,
+
+        fixedHeader: true,
+
+    });
+
+    var cont = 0;
+
+    $('#dataTable thead tr:eq(1) th').each(function () {
+        cont++
+
+
+        $(this).html('<input type="text" style="width:100%; border-radius: 5px;" class="column_search" id = "' + cont + '"/>');
+        var prueba = document.getElementById(cont.toString());
+
+        if (prueba.style.width === "0px") {
+
+            $(this).html('<input type="text" style="width:100%; display: none;" class="column_search" id = "' + cont + '"/>');
+
+
+        } else {
+            $(this).html('<input type="text" style="width:100%; border-radius: 5px;" class="column_search" id = "' + cont + '"/>');
+        }
+    });
+   /*  When a column becomes visible add the input in case it was initially hidden by stateSave*/
+        $('#dataTable').on('column-visibility.dt', function (e, settings, column, state) {
+
+            // Column changed to visible
+            if (state) {
+                // Get the second row TH
+                var rowTwoTH = $(table.column(column).header()).parent().next().find('th:eq(' + column + ')');
+
+                // Add input if calls is filterhead
+                //if ($(rowTwoTH).hasClass('filters')) {
+
+
+                //    //    var title = $(table.column(column).header()).text();
+                //   /* $(rowTwoTH).html('<input type="text" style="width:100%; display: none;" class="column_search" id = ""/>');*/
+
+                //}
+            }
+
+        });
+
+        $('#dataTable thead').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index() + ':visible')
+                .search(this.value)
+                .draw();
+        });
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+HTML
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<table class="display table-head" id="dataTable" style="width: 100%">
+            <thead>
+                <tr>
+                    <th class="filterhead" id="1"></th>
+
+                    <th class="filterhead" id="2">
+                   
+                    </th>
+                    <th class="filterhead" id="3">
+                    
+                    </th>
+                    <th class="filterhead" id="4">
+                        
+                    </th>
+                    <th class="filterhead" id="5">
+                        
+                    </th>
+                    <th class="filterhead" id="6">
+                       
+                    </th>
+                    <th class="filterhead" id="7">
+                        
+                    </th>
+                    <th class="filterhead" id="8">
+                       
+                    </th>
+                    <th class="filterhead" id="9">
+                        
+                    </th>
+                    <th id="10"></th>
+                </tr>
+            </thead>
+<tbody></tbody>
+</table>
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
